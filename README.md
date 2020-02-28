@@ -1,24 +1,27 @@
-# README
+# 万葉課題
+## モデル
+### Userテーブル
+| column name | data |
+| --- | --- |
+| id | integer |
+| name | string |
+| email | string |
+| password | string |
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Taskテーブル
+| column name | data |
+| --- | --- |
+| id | integer |
+| title | string |
+| detail | text |
+| deadline | string |
+| priority | string |
+| status | string |
+| user_id | integer |
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Labelテーブル
+| column name | data |
+| --- | --- |
+| id | integer |
+| title | string |
+| task_id | integer |
