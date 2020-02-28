@@ -10,8 +10,8 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.title %></td>
-        <td><%= task.detail %></td>
+        <td class="title" ><%= task.title %></td>
+        <td class="detail" ><%= task.detail %></td>
         <td><%= link_to '詳細', task %></td>
         <td><%= link_to '編集', edit_task_path(task) %></td>
         <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
