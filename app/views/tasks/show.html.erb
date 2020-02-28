@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+<div class="show task">
+  <ul>
+    <li><strong>タスク名：</strong><%= @task.title %></li>
+    <li><strong>内容：</strong><%= @task.detail %></li>
+  </ul>
+</div>
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
