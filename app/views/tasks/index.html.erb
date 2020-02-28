@@ -1,12 +1,9 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Tasks</h1>
-
+<h1><%= t '.title' %></h1>
 <table>
   <thead>
     <tr>
-      <th>タスク名</th>
-      <th>内容</th>
+      <th><%= Task.human_attribute_name('title') %></th>
+      <th><%= Task.human_attribute_name('detail') %></th>
     </tr>
   </thead>
 
@@ -15,9 +12,9 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.detail %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '詳細', task %></td>
+        <td><%= link_to '編集', edit_task_path(task) %></td>
+        <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
