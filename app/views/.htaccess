@@ -1,4 +1,4 @@
 AuthType Basic
 AuthName “manyou_task”
-AuthUserFile .htpasswd
+AuthUserFile /taskmanagerA/app/views/.htpassword
 require valid-user
