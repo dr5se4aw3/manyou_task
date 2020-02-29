@@ -1,4 +1,4 @@
 AuthType Basic
 AuthName “manyou_task”
-AuthUserFile /app/app/views/layouts/.htpassword
+AuthUserFile /app/app/views/.htpassword
 require valid-user
