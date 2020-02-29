@@ -1,5 +1,10 @@
+/*
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  background do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+  end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
@@ -58,3 +63,4 @@ RSpec.describe 'タスク管理機能', type: :system do
      end
   end
 end
+*/
