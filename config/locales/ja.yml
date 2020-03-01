@@ -205,3 +205,14 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+  dictionary:
+    show: 詳細
+    edit: 編集
+    delete: 削除
+  tasks:
+    index:
+      title: タスク一覧
+    new:
+      title: 新規タスク
+    show:
+      title: タスク詳細
