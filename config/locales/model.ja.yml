@@ -17,4 +17,4 @@ ja:
       task:
         title: タイトル
         detail: 内容
-        
+        deadline: 終了期限

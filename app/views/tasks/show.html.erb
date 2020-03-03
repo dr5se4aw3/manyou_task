@@ -3,6 +3,7 @@
   <ul>
     <li><strong><%= Task.human_attribute_name :title %>：</strong><%= @task.title %></li>
     <li><strong><%= Task.human_attribute_name :detail %>：</strong><%= @task.detail %></li>
+    <li><strong><%= Task.human_attribute_name :deadline %>：</strong><%= @task.deadline %></li>
   </ul>
 </div>
 <%= link_to 'Edit', edit_task_path(@task) %> |
