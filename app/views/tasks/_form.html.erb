@@ -23,6 +23,10 @@
     <%= form.label :deadline %>
     <%= form.date_field :deadline, value:"#{Date.today}" %>
   </div>
+  <div class="form_task">
+    <%= form.label :status %>
+    <%= form.select :status, ['未着手', '着手', '完了'] %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

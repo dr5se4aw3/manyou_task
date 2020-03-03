@@ -6,6 +6,7 @@
       <th><%= Task.human_attribute_name('title') %></th>
       <th><%= Task.human_attribute_name('detail') %></th>
       <th><%= Task.human_attribute_name('deadline') %></th>
+      <th><%= Task.human_attribute_name('status') %></th>
     </tr>
   </thead>
 
@@ -15,6 +16,7 @@
         <td class="title" ><%= task.title %></td>
         <td class="detail" ><%= task.detail %></td>
         <td class="deadline" ><%= task.deadline %></td>
+        <td class="status" ><%= task.status %></td>
         <td><%= link_to '詳細', task %></td>
         <td><%= link_to '編集', edit_task_path(task) %></td>
         <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
