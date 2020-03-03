@@ -1,9 +1,5 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  background do
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-  end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
@@ -27,6 +23,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[0]).to have_content 'new_task'
         expect(task_list[1]).to have_content 'task'
       end
+      it "タスクがdeadlineの降順に並べ替えられること" do
+        task = FactoryBot.create(:task, title: 'aaa', deadline: '2020-01-01')
+        task = FactoryBot.create(:task, title: 'bbb', deadline: '2020-02-01')
+        task = FactoryBot.create(:task, title: 'ccc', deadline: '2020-05-01')
+        task = FactoryBot.create(:task, title: 'ddd', deadline: '2020-04-01')
+        visit tasks_path
+        click_link '終了期限(降順)でソートする'
+        task_list = all('.deadline')
+        expect(task_list[0]).to have_content '2020-05-01'
+        expect(task_list[3]).to have_content '2020-01-01'
+      end
     end
   end
   describe 'タスク登録画面' do
@@ -41,6 +48,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in Task.human_attribute_name('title'), with: 'bbbb'
         # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in Task.human_attribute_name('detail'), with: 'bbbb'
+        fill_in Task.human_attribute_name('deadline'), with: '2020-02-01'
         # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_button '登録する'
