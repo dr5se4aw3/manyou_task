@@ -12,11 +12,11 @@ class TasksController < ApplicationController
     #タイトルおよび状態による絞り込み
     if params[:search]
       if params[:title].present? && params[:status].present?
-        @tasks = Task.where(title: params[:title], status: params[:status])
+        @tasks = Task.search_with_title_status(params[:title], params[:status])
       elsif params[:title].present?
-        @tasks = Task.where(title: params[:title])
+        @tasks = Task.search_with_title(params[:title])
       elsif params[:status].present?
-        @tasks = Task.where(status: params[:status])
+        @tasks = Task.search_with_status(params[:status])
       else
         @tasks = Task.all.order('created_at desc')
       end
