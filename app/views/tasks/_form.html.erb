@@ -29,7 +29,7 @@
   </div>
   <div class="form_task">
     <%= form.label :priority %>
-    <%= form.select :priority, ['低', '中', '高'] %>
+    <%= form.select :priority, Task.priorities.keys.map{ |k| [k,k]} %>
   </div>
 
   <div class="actions">

@@ -9,6 +9,10 @@ class TasksController < ApplicationController
     if params[:sort_expired]
       @tasks = Task.all.order('deadline desc')
     end
+    #優先順位による降順ソート
+    if params[:sort_priority]
+      @tasks = Task.all.order('priority desc')
+    end
     #タイトルおよび状態による絞り込み
     if params[:search]
       if params[:title].present? && params[:status].present?

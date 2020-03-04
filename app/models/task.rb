@@ -3,13 +3,12 @@ class Validator < ActiveModel::Validator
     unless ["未着手","着手中","完了"].include?(record.status)
       record.errors[:status] << 'が不正です。'
     end
-    unless ["低","中","高"].include?(record.priority)
-      record.errors[:priority] << 'が不正です。'
-    end
   end
 end
 
 class Task < ApplicationRecord
+  enum priority:{ "低": 0, "中": 1, "高": 2}
+
   validates :title, presence: true, length: { maximum: 30 }
   validates :detail, presence: true, length: { maximum: 255 }
   validates :deadline, presence: true

@@ -1,21 +1,28 @@
 <h1><%= t '.title' %></h1>
-<%= form_with(local: true, method: :get) do |form| %>
-  <div class="form_task">
-    <%= form.label :title_search, "タイトル検索" %>
-    <%= form.text_field :title %>
-  </div>
-  <div class="form_task">
-    <%= form.label :status_search, "ステータス検索" %>
-    <%= form.select :status, ['','未着手', '着手中', '完了'] %>
-  </div>
-  <%= form.hidden_field :search, value: "true"%>
-  <div class="actions">
-    <%= form.submit "絞り込み検索"%>
-  </div>
-<% end %>
+<div class="search title status">
+  <%= form_with(local: true, method: :get) do |form| %>
+    <div class="form_task">
+      <%= form.label :title_search, "タイトル検索" %>
+      <%= form.text_field :title %>
+    </div>
+    <div class="form_task">
+      <%= form.label :status_search, "ステータス検索" %>
+      <%= form.select :status, ['','未着手', '着手中', '完了'] %>
+    </div>
+    <%= form.hidden_field :search, value: "true"%>
+    <div class="actions">
+      <%= form.submit "絞り込み検索"%>
+    </div>
+  <% end %>
+</div>
 
+<div class="sort deadline">
+  <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired: "true") %>
+</div>
+<div class="sort priority">
+  <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
+</div>
 
-<%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired: "true") %>
 <table>
   <thead>
     <tr>

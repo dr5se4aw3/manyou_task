@@ -216,3 +216,9 @@ ja:
       title: 新規タスク
     show:
       title: タスク詳細
+  enums:
+    task:
+      priority:
+        low: 低
+        middle: 中
+        high: 高
