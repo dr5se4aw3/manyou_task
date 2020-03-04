@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  PER = 8
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all.order('created_at desc')
+    #@tasks = Task.all.order('created_at desc')
+    #@tasks = Task.page.(params[:page]).per(PER)
+    @tasks = Task.order('created_at desc').page(params[7]).per(PER)
     #終了期限による降順ソート
     if params[:sort_expired]
       @tasks = Task.all.order('deadline desc')
