@@ -47,4 +47,28 @@ RSpec.describe Task, type: :model do
       expect(task).to be_valid
     end
   end
+
+  describe 'scopeの挙動確認' do
+    before do
+      @taskA1 = FactoryBot.create(:task, title:'aaaa', status: '未着手')
+      @taskA2 = FactoryBot.create(:task, title:'aaaa', status: '着手中')
+      @taskB1 = FactoryBot.create(:task, title:'BBBB', status: '未着手')
+      @taskB2 = FactoryBot.create(:task, title:'BBBB', status: '着手中')
+    end
+    it "titleとstatusによる絞り込み検索が通る" do
+      task = Task.search_with_title_status('aaaa', '未着手')
+      #task = Task.search_with_title('aaaa').search_with_status('未着手')
+      expect(task).to include(@taskA1)
+    end
+    it "titleによる絞り込み検索が通る" do
+      task = Task.search_with_title("BBBB")
+      expect(task).to include(@taskB1)
+      expect(task).to include(@taskB2)
+    end
+    it "titleとstatusによる絞り込み検索が通る" do
+      task = Task.search_with_status("未着手")
+      expect(task).to include(@taskA1)
+      expect(task).to include(@taskB1)
+    end
+  end
 end
