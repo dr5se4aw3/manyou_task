@@ -4,10 +4,22 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
+    @tasks = Task.all.order('created_at desc')
+    #終了期限による降順ソート
     if params[:sort_expired]
       @tasks = Task.all.order('deadline desc')
-    else
-      @tasks = Task.all.order('created_at desc')
+    end
+    #タイトルおよび状態による絞り込み
+    if params[:search]
+      if params[:title].present? && params[:status].present?
+        @tasks = Task.where(title: params[:title], status: params[:status])
+      elsif params[:title].present?
+        @tasks = Task.where(title: params[:title])
+      elsif params[:status].present?
+        @tasks = Task.where(status: params[:status])
+      else
+        @tasks = Task.all.order('created_at desc')
+      end
     end
   end
 
