@@ -35,6 +35,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[3]).to have_content '2020-01-01'
       end
     end
+    context '優先順位によるソートのリンクを押した場合' do
+      it "優先順位の降順でソートされた一覧画面が表示されること" do
+        tasks = FactoryBot.create(:task, title:'a_mid', priority: '中')
+        tasks = FactoryBot.create(:task, title:'a_low', priority: '低')
+        tasks = FactoryBot.create(:task, title:'a_hig', priority: '高')
+        visit tasks_path
+        click_link '優先順位でソートする'
+        task_list = all('.priority')
+        expect(task_list[0]).to have_content '高'
+        expect(task_list[2]).to have_content '低'
+      end
+    end
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
@@ -62,7 +74,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移すること' do
-         task = FactoryBot.create(:task)
+         task = FactoryBot.create(:task, title: 'aaaatitle')
          visit tasks_path
          click_link '詳細'
          expect(page).to have_content 'aaaatitle'

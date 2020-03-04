@@ -4,5 +4,6 @@ FactoryBot.define do
     detail { 'detail' }
     deadline { '2020-06-01' }
     status { '未着手' }
+    priority { '低' }
   end
 end
