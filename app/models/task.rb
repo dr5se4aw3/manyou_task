@@ -14,7 +14,7 @@ class Task < ApplicationRecord
   include ActiveModel::Validations
   validates_with StatusValidator
 
-  scope :search_with_title_status, -> (title, status){where(title: title, status: status)}
-  scope :search_with_title, -> (title){where(title: title)}
+  scope :search_with_title_status, -> (title, status){where("title LIKE ?", "%#{title}%").where(status: status)}
+  scope :search_with_title, -> (title){where("title LIKE ?", "%#{title}%")}
   scope :search_with_status, -> (status){where(status: status)}
 end
