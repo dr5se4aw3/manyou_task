@@ -10,9 +10,21 @@
   </head>
 
   <body>
-    <div class="container-fluid">
-      <p id="notice"><%= notice %></p>
-      <%= yield %>
+    <header>
+    <div class="header_container">
+      <h2>Task manager</h2>
+      <div class="header_right">
+        <%= link_to 'タスク一覧', tasks_path, class: "btn btn-primary btn-lg"  %>
+        <%= link_to '新規タスク', new_task_path, class: "btn btn-primary btn-lg"  %>
+      </div>
+
     </div>
+    </header>
+    <main>
+      <div class="container-fluid">
+        <p id="notice"><%= notice %></p>
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>

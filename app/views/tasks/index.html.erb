@@ -1,7 +1,7 @@
 <h1><%= t '.title' %></h1>
 <div class="row search_title_status">
   <%= form_with(local: true, method: :get) do |form| %>
-    <div class="col-md-10 form_task">
+    <div class="col-md-5 form_task">
       <%= form.label :title_search, "タイトル検索" %>
       <%= form.text_field :title %>
       <%= form.label :status_search, "ステータス検索" %>
@@ -12,14 +12,14 @@
       <%= form.submit "絞り込み検索"%>
     </div>
   <% end %>
+  <div class="col-md-2 sort_deadline">
+    <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired: "true")%>
+  </div>
+  <div class="col-md-2 sort_priority">
+    <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true")%>
+  </div>
 </div>
 
-<div class="row sort_deadline">
-  <%= link_to "終了期限(降順)でソートする", tasks_path(sort_expired: "true"), class: "col-md-10" %>
-</div>
-<div class="row sort_priority">
-  <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true"), class: "col-md-10" %>
-</div>
 
 <div class="task_table">
   <table class="table">

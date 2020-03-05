@@ -14,3 +14,20 @@
  *= require_tree .
  *= require_self
  */
+
+ header{
+   height: 60px;
+   background-color: white;
+   margin-bottom: 20px;
+ }
+
+ header .header_container{
+   padding: 0 30px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+
+ header .flash_message{
+   background-color: #fce19c;
+ }
