@@ -1,4 +1,4 @@
-<div class="form_container">
+<div class="main_container">
   <h1><%= t "tasks.#{action_name}.title" %></h1>
   <%= form_with(model: task, local: true) do |form| %>
     <% if task.errors.any? %>
@@ -40,8 +40,6 @@
           <td></td>
         </tr>
       </table>
-      <div class="actions">
-      </div>
     </div>
   </div>
 </div>
