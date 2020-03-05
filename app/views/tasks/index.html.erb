@@ -48,9 +48,9 @@
           <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
-      <%= paginate @tasks %>
     </tbody>
   </table>
+  <%= paginate @tasks %>
 </div>
 
 <br>

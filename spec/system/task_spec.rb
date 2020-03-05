@@ -47,6 +47,37 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[2]).to have_content '低'
       end
     end
+    context 'タスクを6件以上作成した場合' do
+      before do
+        task = FactoryBot.create(:task, title: 'aaa')
+        task = FactoryBot.create(:task, title: 'bbb')
+        task = FactoryBot.create(:task, title: 'ccc')
+        task = FactoryBot.create(:task, title: 'ddd')
+        task = FactoryBot.create(:task, title: 'eee')
+        task = FactoryBot.create(:task, title: 'fff')
+        visit tasks_path
+      end
+      it "ページネーションが行われること" do
+        expect(page).to have_selector '.current', text: '1'
+        expect(page).to have_link '2'
+        expect(page).to have_link 'Next'
+        expect(page).to have_link 'Last'
+      end
+      it "５件目までが１ページ目に表示されていること" do
+        task_list = all('.title')
+        expect(task_list[0]).to have_content 'fff'
+        expect(task_list[4]).to have_content 'bbb'
+      end
+      it "６件目以降が次のページで表示されていること" do
+        click_link 'Next'
+        expect(page).to have_link 'First'
+        expect(page).to have_link 'Previous'
+        expect(page).to have_link '1'
+        expect(page).to have_selector '.current', text: '2'
+        task_list = all('.title')
+        expect(task_list[0]).to have_content 'aaa'
+      end
+    end
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
