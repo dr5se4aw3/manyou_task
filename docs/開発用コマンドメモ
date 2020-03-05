@@ -1,0 +1,4 @@
+rspec ./spec/system/task_spec.rb
+rspec ./spec/models/task_spec.rb
+
+rails assets:precompile RAILS_ENV=production
