@@ -3,17 +3,25 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   describe '入力が空白の場合' do
     it 'titleが空ならバリデーションが通らない' do
-      task = Task.new(title: '', detail: '失敗テスト')
+      task = FactoryBot.build(:task, title:'')
       expect(task).not_to be_valid
     end
-    it 'contentが空ならバリデーションが通らない' do
+    it 'detailが空ならバリデーションが通らない' do
       # ここに内容を記載する
-      task = Task.new(title: '失敗テスト', detail: '')
+      task = FactoryBot.build(:task, detail:'')
       expect(task).not_to be_valid
+    end
+    it "deadlineが空ならバリデーションが通らない" do
+      task = FactoryBot.build(:task, deadline:'')
+    expect(task).not_to be_valid
+    end
+    it "priorityが空ならバリデーションが通らない" do
+      task = FactoryBot.build(:task, priority:'')
+    expect(task).not_to be_valid
     end
     it 'titleとcontentに内容が記載されていればバリデーションが通る' do
       # ここに内容を記載する
-      task = Task.new(title: '成功テスト', detail: '成功テスト')
+      task = FactoryBot.build(:task)
       expect(task).to be_valid
     end
   end

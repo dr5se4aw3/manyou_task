@@ -33,7 +33,7 @@
         </tr>
         <tr class="row">
           <td class="col-md-2"><%= form.label :priority %></td>
-          <td class="col-md-7"><%= form.select :priority, Task.priorities.keys.map{ |k| [k,k]} %></td>
+          <td class="col-md-7"><%= form.select :priority, Task.priorities.keys.to_a %></td>
         </tr>
         <tr class="row">
           <td><%= form.submit %></td>
