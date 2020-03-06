@@ -93,6 +93,10 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in Task.human_attribute_name(:title), with: '架空案件１−１'
         # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in Task.human_attribute_name(:detail), with: '要件定義を終えること'
+        fill_in Task.human_attribute_name(:deadline), with: "2020\t0601"
+        #page.first('#task_deadline').set("2020\t0601")
+        select '未着手', from: Task.human_attribute_name(:status)
+        select '低', from: Task.human_attribute_name(:priority)
         # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_button '登録する'
@@ -102,16 +106,24 @@ RSpec.describe 'タスク管理機能', type: :system do
         sleep 0.5
         expect(first('#title')).to have_content '架空案件１−１'
         expect(first('#detail')).to have_content '要件定義を終えること'
+        expect(first('#deadline')).to have_content "2020-06-01"
+        expect(first('#status')).to have_content '未着手'
+        expect(first('#priority')).to have_content '低'
+
       end
     end
   end
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移すること' do
-         task = FactoryBot.create(:task, title: 'aaaatitle')
+         task = FactoryBot.create(:task)
          visit tasks_path
          click_link '詳細'
-         expect(page).to have_content 'aaaatitle'
+         expect(first('#title')).to have_content '架空案件１−１'
+         expect(first('#detail')).to have_content '要件定義終えること'
+         expect(first('#deadline')).to have_content "2020-06-01"
+         expect(first('#status')).to have_content '未着手'
+         expect(first('#priority')).to have_content '低'
        end
      end
   end
