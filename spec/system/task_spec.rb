@@ -30,6 +30,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         task = FactoryBot.create(:task, title: 'ddd', deadline: '2020-04-01')
         visit tasks_path
         click_link '終了期限(降順)でソートする'
+        sleep 0.5
         task_list = all('.deadline')
         expect(task_list[0]).to have_content '2020-05-01'
         expect(task_list[3]).to have_content '2020-01-01'
@@ -42,6 +43,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         tasks = FactoryBot.create(:task, title:'a_hig', priority: '高')
         visit tasks_path
         click_link '優先順位でソートする'
+        sleep 0.5
         task_list = all('.priority')
         expect(task_list[0]).to have_content '高'
         expect(task_list[2]).to have_content '低'
@@ -88,17 +90,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
         # タスクのタイトルと内容をそれぞれfill_in（入力）する
         # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-        fill_in Task.human_attribute_name('title'), with: 'bbbb'
+        fill_in Task.human_attribute_name(:title), with: '架空案件１−１'
         # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-        fill_in Task.human_attribute_name('detail'), with: 'bbbb'
-        fill_in Task.human_attribute_name('deadline'), with: '2020-02-01'
+        fill_in Task.human_attribute_name(:detail), with: '要件定義を終えること'
         # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
         # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_button '登録する'
         # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
         # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
         # 5.タスク詳細ページに、テストコードで作成したはずのデータ（記述）がhave_contentされているか（含まれているか）を確認（期待）するコードを書く
-        expect(page).to have_content 'bbbb'
+        sleep 0.5
+        expect(first('#title')).to have_content '架空案件１−１'
+        expect(first('#detail')).to have_content '要件定義を終えること'
       end
     end
   end

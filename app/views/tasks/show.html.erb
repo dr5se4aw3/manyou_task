@@ -5,23 +5,23 @@
       <table class="table table-borderless">
         <tr class="row">
           <td class="col-md-2"><%= Task.human_attribute_name :title %></td>
-          <td class="col-md-10"><%= @task.title %></td>
+          <td class="col-md-10" id="title"><%= @task.title %></td>
         </tr>
         <tr class="row">
           <td class="col-md-2"><%= Task.human_attribute_name :detail %></td>
-          <td class="col-md-10"><%= @task.detail %></td>
+          <td class="col-md-10" id="detail"><%= @task.detail %></td>
         </tr>
         <tr class="row">
           <td class="col-md-2"><%= Task.human_attribute_name :deadline %></td>
-          <td class="col-md-10"><%= @task.deadline %></td>
+          <td class="col-md-10" id="deadline"><%= @task.deadline %></td>
         </tr>
         <tr class="row">
           <td class="col-md-2"><%= Task.human_attribute_name :status %></td>
-          <td class="col-md-10"><%= @task.status %></td>
+          <td class="col-md-10" id="status"><%= @task.status %></td>
         </tr>
         <tr class="row">
           <td class="col-md-2"><%= Task.human_attribute_name :priority %></td>
-          <td class="col-md-7"><%= @task.priority %></td>
+          <td class="col-md-7" id="priority"><%= @task.priority %></td>
         </tr>
       </table>
     </div>
