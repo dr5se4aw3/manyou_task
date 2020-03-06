@@ -26,31 +26,20 @@ RSpec.describe Task, type: :model do
     end
   end
   context '入力が文字数制限を上回る場合' do
-    it "titleが文字数を制限を上回るならバリデーションが通らない" do
-      title_31character = ''
-      (0...31).each do
-        title_31character << 'a'
-      end
+    it "titleが文字数制限(３０文字以下)を上回るならバリデーションが通らない" do
+      title_31character = 'a'*31
       task = Task.new(title: title_31character, detail: '失敗テスト')
       expect(task).not_to be_valid
     end
-    it "detailが文字数を制限を上回るならバリデーションが通らない" do
-      detail_256character = ''
-      (0...256).each do
-        detail_256character << 'a'
-      end
+    it "detailが文字数制限(２５５文字以下)を上回るならバリデーションが通らない" do
+      detail_256character = 'a'*256
+
       task = Task.new(title: '失敗テスト', detail: detail_256character)
       expect(task).not_to be_valid
     end
     it "titleとdetailの文字数が制限以下ならバリデーションが通る" do
-      title_31character = ''
-      (0...30).each do
-        title_31character << 'a'
-      end
-      detail_256character = ''
-      (0...255).each do
-        detail_256character << 'a'
-      end
+      title_31character = 'a'*30
+      detail_256character = 'a'*255
       task = Task.new(title: title_31character, detail: detail_256character)
       expect(task).to be_valid
     end
