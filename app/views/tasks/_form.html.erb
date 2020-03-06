@@ -1,26 +1,46 @@
-<%= form_with(model: task, local: true) do |form| %>
-  <% if task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= task.errors.count %> 件のエラーがあります。</h2>
+<div class="main_container">
+  <h1><%= t "tasks.#{action_name}.title" %></h1>
+  <%= form_with(model: task, local: true) do |form| %>
+    <% if task.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= task.errors.count %> 件のエラーがあります。</h2>
 
-      <ul>
-      <% task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <div class="row">
+    <div class="col-md-4 form_main">
+      <table class="table table-borderless">
+        <tr class="row">
+          <td class="col-md-2"><%= form.label :title %></td>
+          <td class="col-md-10"><%= form.text_field :title , size: "45"%></td>
+        </tr>
+        <tr class="row">
+          <td class="col-md-2"><%= form.label :detail %></td>
+          <td class="col-md-10"><%= form.text_area :detail, size: "45x5" %></td>
+        </tr>
+        <tr class="row">
+          <td class="col-md-2"><%= form.label :deadline %></td>
+          <td class="col-md-10"><%= form.date_field :deadline, value:"" %></td>
+        </tr>
+        <tr class="row">
+          <td class="col-md-2"><%= form.label :status %></td>
+          <td class="col-md-10"><%= form.select :status, ['未着手', '着手中', '完了'] %></td>
+        </tr>
+        <tr class="row">
+          <td class="col-md-2"><%= form.label :priority %></td>
+          <td class="col-md-7"><%= form.select :priority, Task.priorities.keys.to_a %></td>
+        </tr>
+        <tr class="row">
+          <td><%= form.submit %></td>
+          <td></td>
+        </tr>
+      </table>
     </div>
-  <% end %>
-
-  <div class="form_task">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
-  <div class="form_task">
-    <%= form.label :detail %>
-    <%= form.text_field :detail %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+</div>
 <% end %>

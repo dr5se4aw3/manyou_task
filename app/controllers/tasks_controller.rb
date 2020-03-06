@@ -1,10 +1,31 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all.order('created_at desc')
+    #@tasks = Task.all.order('created_at desc')
+    #@tasks = Task.page.(params[:page]).per(PER)
+    @tasks = Task.order('created_at desc').page(params[:page]).per(5)
+    #終了期限による降順ソート
+    if params[:sort_expired]
+      @tasks = Task.all.order('deadline desc').page(params[:page]).per(5)
+    end
+    #優先順位による降順ソート
+    if params[:sort_priority]
+      @tasks = Task.all.order('priority desc').page(params[:page]).per(5)
+    end
+    #タイトルおよび状態による絞り込み
+    if params[:search]
+      if params[:title].present? && params[:status].present?
+        @tasks = Task.search_with_title_status(params[:title], params[:status]).page(params[:page]).per(5)
+      elsif params[:title].present?
+        @tasks = Task.search_with_title(params[:title]).page(params[:page]).per(5)
+      elsif params[:status].present?
+        @tasks = Task.search_with_status(params[:status]).page(params[:page]).per(5)
+      else
+        @tasks = Task.all.order('created_at desc').page(params[:page]).per(5)
+      end
+    end
   end
 
   # GET /tasks/1
@@ -69,6 +90,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :detail)
+      params.require(:task).permit(:title, :detail, :deadline, :status, :priority)
     end
 end
