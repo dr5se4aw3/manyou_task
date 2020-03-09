@@ -17,6 +17,9 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    if logged_in?
+      redirect_to user_path(current_user.id), notice: '既にログインしています。'
+    end
     @user = User.new
   end
 
