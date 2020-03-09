@@ -1,4 +1,17 @@
-<p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="profile_container">
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+
+  <p>
+    <%= link_to 'ユーザー情報を編集', edit_user_path(@user.id), class: "btn btn-info" %> |
+    <%= link_to 'Back', users_path %>
+  </p>
+</div>
