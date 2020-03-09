@@ -41,6 +41,9 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    if @task.user_id != current_user.id
+      redirect_to tasks_path, notice: '他ユーザーのタスクは編集できません。'
+    end
   end
 
   # POST /tasks
@@ -75,6 +78,9 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
+    if @task.user_id != current_user.id
+      redirect_to tasks_path, notice: '他ユーザーのタスクは削除できません。'
+    end
     @task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }

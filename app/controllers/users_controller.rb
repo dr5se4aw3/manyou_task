@@ -13,6 +13,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if @user.id != current_user.id
+      redirect_to user_path(current_user.id), notice: '他ユーザーの情報は閲覧できません。'
+    end
   end
 
   # GET /users/new
@@ -25,6 +28,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if @user.id != current_user.id
+      redirect_to user_path(current_user.id), notice: '他ユーザーの情報は編集できません。'
+    end
   end
 
   # POST /users
@@ -57,6 +63,9 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    if @user.id != current_user.id
+      redirect_to user_path(current_user.id), notice: '他ユーザーの情報は削除できません。'
+    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to new_user_url, notice: 'User was successfully destroyed.' }
