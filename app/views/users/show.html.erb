@@ -1,17 +1,17 @@
 
 <div class="profile_container">
   <p>
-    <strong>Name:</strong>
+    <strong><%= User.human_attribute_name :name %>:</strong>
     <%= @user.name %>
   </p>
 
   <p>
-    <strong>Email:</strong>
+    <strong><%= User.human_attribute_name :email %>:</strong>
     <%= @user.email %>
   </p>
 
   <p>
     <%= link_to 'ユーザー情報を編集', edit_user_path(@user.id), class: "btn btn-info" %> |
-    <%= link_to 'Back', users_path %>
+    <%= link_to 'ユーザー情報を削除する', @user, method: :delete, data: { confirm: '本当に削除しますか？' } %>
   </p>
 </div>

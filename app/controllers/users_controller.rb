@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+#  before_action :check_login, only: [:show, :edit, :update, :destroy]
   # GET /users
   # GET /users.json
+=begin
+  #一般ユーザーではユーザー一覧機能は使用できない
+  #別途、管理者用コントローラーを作成し、そちらでは一覧機能を実装する
   def index
     @users = User.all
   end
-
+=end
   # GET /users/1
   # GET /users/1.json
   def show
@@ -56,7 +59,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to new_user_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +72,15 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
+=begin
+    def check_login
+      if logged_in?
+      else
+        flash[:notice] = "ログインしてください"
+        redirect_to new_session_path
+      end
+    end
+=end
 end
