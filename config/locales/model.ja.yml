@@ -20,3 +20,6 @@ ja:
         deadline: 終了期限
         status: 状態
         priority: 優先順位
+      session:
+        email: メールアドレス
+        password: パスワード
