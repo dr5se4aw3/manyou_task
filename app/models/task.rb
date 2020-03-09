@@ -22,7 +22,8 @@ class Task < ApplicationRecord
   validates :priority,presence: true
 
 
-  scope :search_with_title_status, -> (title, status){where("title LIKE ?", "%#{title}%").where(status: status)}
-  scope :search_with_title, -> (title){where("title LIKE ?", "%#{title}%")}
-  scope :search_with_status, -> (status){where(status: status)}
+  scope :search_with_user_id, -> (cuurent_user_id){where(user_id: cuurent_user_id)}
+  scope :search_with_title_status, -> (title, status, cuurent_user_id){where("title LIKE ?", "%#{title}%").where(status: status).where(user_id: cuurent_user_id)}
+  scope :search_with_title, -> (title, cuurent_user_id){where("title LIKE ?", "%#{title}%").where(user_id: cuurent_user_id)}
+  scope :search_with_status, -> (status, cuurent_user_id){where(status: status).where(user_id: cuurent_user_id)}
 end
