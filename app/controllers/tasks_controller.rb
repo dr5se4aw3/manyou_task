@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :check_login
   # GET /tasks
   # GET /tasks.json
   def index
@@ -91,5 +92,13 @@ class TasksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:title, :detail, :deadline, :status, :priority)
+    end
+
+    def check_login
+      if logged_in?
+      else
+        flash[:notice] = "ログインしてください"
+        redirect_to new_session_path
+      end
     end
 end
