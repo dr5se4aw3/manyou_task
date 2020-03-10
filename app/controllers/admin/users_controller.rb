@@ -1,10 +1,13 @@
+class AuthorityError < StandardError #例外クラスを継承
+end
+
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_admin, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin
   # GET /users
   # GET /users.json
   def index
-    @users = User.all.order('id')
+    @users = User.all.includes(:tasks).order('id')
   end
   # GET /users/1
   # GET /users/1.json
@@ -46,6 +49,10 @@ class Admin::UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    if User.select(:admin).where(admin: true).count == 1
+      flash[:notice] = '管理者は最低一人必要なため削除できません。'
+      redirect_to admin_users_path and return
+    end
     @user.destroy
     redirect_to admin_users_path, notice: 'ユーザーの削除が完了しました'
   end
@@ -63,8 +70,12 @@ class Admin::UsersController < ApplicationController
     def check_admin
       if admin_user?
       else
-        flash[:notice] = "管理者権限がありません"
-        redirect_to new_session_path
+        begin
+          raise AuthorityError
+        rescue => e
+          flash[:notice] = "#{e}：管理者権限がありません"
+          redirect_to user_path(current_user.id)
+        end
       end
     end
 end
