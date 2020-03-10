@@ -6,4 +6,8 @@ module SessionsHelper
   def logged_in?
     current_user.present?
   end
+
+  def admin_user?
+    current_user.admin
+  end
 end
