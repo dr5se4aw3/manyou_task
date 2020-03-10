@@ -4,18 +4,16 @@ class Admin::UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.all.order('id')
   end
   # GET /users/1
   # GET /users/1.json
   def show
+    @tasks = @user.tasks
   end
 
   # GET /users/new
   def new
-    if logged_in?
-      redirect_to admin_user_path(current_user.id), notice: '既にログインしています。'
-    end
     @user = User.new
   end
 
@@ -28,9 +26,8 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
-      flash[:notice] = "ユーザー登録が完了しました。"
-      redirect_to admin_user_path(@user.id)
+      flash[:notice] = "ユーザー登録が完了しました(管理者画面)。"
+      redirect_to admin_users_path
     else
       render :new
     end
@@ -50,9 +47,7 @@ class Admin::UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    respond_to do |format|
-      redirect_to admin_users_path, notice: 'ユーザーの削除が完了しました'
-    end
+    redirect_to admin_users_path, notice: 'ユーザーの削除が完了しました'
   end
 
   private
