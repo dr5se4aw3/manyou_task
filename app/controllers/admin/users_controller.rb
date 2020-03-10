@@ -3,7 +3,7 @@ end
 
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_admin
+  #before_action :check_admin
   # GET /users
   # GET /users.json
   def index
@@ -49,12 +49,13 @@ class Admin::UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    if User.select(:admin).where(admin: true).count == 1
-      flash[:notice] = '管理者は最低一人必要なため削除できません。'
-      redirect_to admin_users_path and return
+
+    if @user.destroy
+      redirect_to admin_users_path, notice: 'ユーザーの削除が完了しました'
+    else
+      flash[:notice] = '管理者は最低一人必要なため削除できません'
+      redirect_to admin_users_path
     end
-    @user.destroy
-    redirect_to admin_users_path, notice: 'ユーザーの削除が完了しました'
   end
 
   private
