@@ -3,7 +3,7 @@ end
 
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  #before_action :check_admin
+  before_action :check_admin
   # GET /users
   # GET /users.json
   def index
@@ -69,14 +69,19 @@ class Admin::UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
     end
     def check_admin
-      if admin_user?
-      else
-        begin
-          raise AuthorityError
-        rescue => e
-          flash[:notice] = "#{e}：管理者権限がありません"
-          redirect_to user_path(current_user.id)
+      if logged_in?
+        if admin_user?
+        else
+          begin
+            raise AuthorityError
+          rescue => e
+            flash[:notice] = "#{e}：管理者権限がありません"
+            redirect_to user_path(current_user.id)
+          end
         end
+      else
+        flash[:notice] = "ログインしてください"
+        redirect_to new_session_path
       end
     end
 end
