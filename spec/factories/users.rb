@@ -5,5 +5,6 @@ FactoryBot.define do
     password{ 'sample' }
     #password: sample
   #  $2a$10$APrzTDa9KkKlYqL8ZVTDg.m1D7AzYXPv8mXfdfw9fJVXwbQPmTTQe
+    admin{ false }
   end
 end

@@ -21,7 +21,7 @@
           <%= link_to '新規タスク', new_task_path, class: "btn btn-primary btn-lg"  %>
         <% else %>
           <%= link_to "ユーザー登録", new_user_path, class: "btn btn-info btn-lg"  %>
-          <%= link_to "ログイン", new_session_path, class: "btn btn-primary btn-lg"  %>
+          <%= link_to "ログイン画面", new_session_path, class: "btn btn-primary btn-lg"  %>
         <% end %>
       </div>
     </div>
@@ -33,12 +33,14 @@
       </div>
     </main>
     <footer>
-      <% if admin_user? %>
-        <h2>管理者用メニュー</h2>
-        <%= link_to "ユーザー一覧", admin_users_path, class: "btn btn-info btn-lg"  %>
-        <%= link_to "プロフィール", admin_user_path(current_user.id), class: "btn btn-info btn-lg" %>
-        <%= link_to "ユーザー登録", new_admin_user_path, class: "btn btn-info btn-lg"  %>
-        <%= link_to 'タスク一覧', tasks_path, class: "btn btn-primary btn-lg"  %>
+      <% if logged_in? %>
+        <% if admin_user? %>
+          <h2>管理者用メニュー</h2>
+          <%= link_to "ユーザー一覧", admin_users_path, class: "btn btn-info btn-lg"  %>
+          <%= link_to "プロフィール", admin_user_path(current_user.id), class: "btn btn-info btn-lg" %>
+          <%= link_to "ユーザー登録", new_admin_user_path, class: "btn btn-info btn-lg"  %>
+          <%= link_to 'タスク一覧', tasks_path, class: "btn btn-primary btn-lg"  %>
+        <% end %>
       <% end %>
     </footer>
   </body>
