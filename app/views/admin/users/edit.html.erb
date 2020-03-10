@@ -1,4 +1,4 @@
-<h1>Editing User</h1>
+<h1><%= t "users.#{action_name}.title" %></h1>
 
 <div class="form_container">
   <%= form_with(model: @user, local: true, url: admin_user_path, method: :PATCH) do |form| %>
@@ -46,6 +46,3 @@
   </div>
 </div>
 <% end %>
-
-<%= link_to '詳細', @user %> |
-<%= link_to '戻る', users_path %>

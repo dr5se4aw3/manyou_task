@@ -42,7 +42,8 @@ class Admin::UsersController < ApplicationController
       if @user.update(user_params)
         redirect_to admin_user_path(@user.id), notice: 'ユーザー情報の更新が完了しました'
       else
-        render :edit
+        flash[:notice] = '管理者は最低一人必要なため権限を剥奪できません'
+        redirect_to admin_users_path
       end
   end
 

@@ -1,5 +1,5 @@
 <div class="form_container">
-  <h1>ログインフォーム</h1>
+<h1><%= t "sessions.#{action_name}.title" %></h1>
   <div class="form_main">
     <%= form_with(scope: :session, url: sessions_path, local:true) do |f| %>
       <p>

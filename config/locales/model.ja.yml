@@ -12,6 +12,7 @@ ja:
         current_password: 現在のパスワード
         password: パスワード
         password_confirmation: 確認用パスワード
+        admin: 権限
         remember_me: ログインを記憶
         image: イメージ
       task:

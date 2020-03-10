@@ -1,4 +1,4 @@
-<h1>New User</h1>
+<h1><%= t "users.#{action_name}.title" %></h1>
 <div class="form_container">
   <%= form_with(model: @user, local: true, url: admin_users_path) do |form| %>
     <% if @user.errors.any? %>
@@ -45,5 +45,3 @@
   </div>
 </div>
 <% end %>
-
-<%= link_to '戻る', users_path %>

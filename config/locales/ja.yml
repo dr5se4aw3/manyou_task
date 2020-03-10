@@ -222,11 +222,14 @@ ja:
     index:
       title: ユーザー一覧
     new:
-      title: 新規ユーザー登録
+      title: ユーザー登録
     show:
       title: ユーザー情報
     edit:
       title: ユーザー情報編集
+  sessions:
+    new:
+      title: ログイン
   enums:
     task:
       priority:

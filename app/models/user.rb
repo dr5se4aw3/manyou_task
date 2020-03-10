@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
   has_many :tasks, dependent: :destroy
   after_destroy :last_admin!
+  after_update :last_admin!
 
   private
   def last_admin!
