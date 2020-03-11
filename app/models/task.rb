@@ -14,6 +14,7 @@ class Task < ApplicationRecord
   belongs_to :user
   has_many :label_on_tasks, dependent: :destroy
   has_many :related_labels, through: :label_on_tasks, source: :label
+  accepts_nested_attributes_for :label_on_tasks, reject_if: :all_blank
   enum priority:{ 低: 0, 中: 1, 高: 2}
 
   validates :title, presence: true, length: { maximum: 30 }

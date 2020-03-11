@@ -32,11 +32,14 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @labels_on_task = @task.related_labels
   end
 
   # GET /tasks/new
   def new
     @task = Task.new
+    @task.label_on_tasks.build
+    @labels = Label.all
   end
 
   # GET /tasks/1/edit
