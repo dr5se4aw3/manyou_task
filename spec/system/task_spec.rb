@@ -1,33 +1,40 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  before do
+    @user1 = FactoryBot.create(:user, name: 'sample01', email: 'sample_mail01@sample.com')
+    visit new_session_path
+    fill_in :Email, with: 'sample_mail01@sample.com'
+    fill_in :Password, with: 'sample'
+    click_button 'ログイン'
+  end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
       # テストで使用するためのタスクを作成
-      task = FactoryBot.create(:task, title: 'task')
+      task = FactoryBot.create(:task, title: 'タスクを作成した場合', user_id: @user1.id)
       # タスク一覧ページに遷移
       visit tasks_path
       # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
       # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-      expect(page).to have_content 'task'
+      expect(page).to have_content 'タスクを作成した場合'
       # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいること' do
         # 省略
-        task = FactoryBot.create(:task, title: 'task')
-        new_task = FactoryBot.create(:task, title: 'new_task')
+        task = FactoryBot.create(:task, title: 'task', user_id: @user1.id)
+        new_task = FactoryBot.create(:task, title: 'new_task', user_id: @user1.id)
         visit tasks_path
         task_list = all('.title') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'new_task'
         expect(task_list[1]).to have_content 'task'
       end
       it "タスクがdeadlineの降順に並べ替えられること" do
-        task = FactoryBot.create(:task, title: 'aaa', deadline: '2020-01-01')
-        task = FactoryBot.create(:task, title: 'bbb', deadline: '2020-02-01')
-        task = FactoryBot.create(:task, title: 'ccc', deadline: '2020-05-01')
-        task = FactoryBot.create(:task, title: 'ddd', deadline: '2020-04-01')
+        task = FactoryBot.create(:task, title: 'aaa', deadline: '2020-01-01', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'bbb', deadline: '2020-02-01', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'ccc', deadline: '2020-05-01', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'ddd', deadline: '2020-04-01', user_id: @user1.id)
         visit tasks_path
         click_link '終了期限(降順)でソートする'
         sleep 0.5
@@ -38,9 +45,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '優先順位によるソートのリンクを押した場合' do
       it "優先順位の降順でソートされた一覧画面が表示されること" do
-        tasks = FactoryBot.create(:task, title:'a_mid', priority: '中')
-        tasks = FactoryBot.create(:task, title:'a_low', priority: '低')
-        tasks = FactoryBot.create(:task, title:'a_hig', priority: '高')
+        tasks = FactoryBot.create(:task, title:'a_mid', priority: '中', user_id: @user1.id)
+        tasks = FactoryBot.create(:task, title:'a_low', priority: '低', user_id: @user1.id)
+        tasks = FactoryBot.create(:task, title:'a_hig', priority: '高', user_id: @user1.id)
         visit tasks_path
         click_link '優先順位でソートする'
         sleep 0.5
@@ -51,12 +58,12 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タスクを6件以上作成した場合' do
       before do
-        task = FactoryBot.create(:task, title: 'aaa')
-        task = FactoryBot.create(:task, title: 'bbb')
-        task = FactoryBot.create(:task, title: 'ccc')
-        task = FactoryBot.create(:task, title: 'ddd')
-        task = FactoryBot.create(:task, title: 'eee')
-        task = FactoryBot.create(:task, title: 'fff')
+        task = FactoryBot.create(:task, title: 'aaa', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'bbb', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'ccc', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'ddd', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'eee', user_id: @user1.id)
+        task = FactoryBot.create(:task, title: 'fff', user_id: @user1.id)
         visit tasks_path
       end
       it "ページネーションが行われること" do
@@ -116,7 +123,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移すること' do
-         task = FactoryBot.create(:task)
+         task = FactoryBot.create(:task, user_id: @user1.id)
          visit tasks_path
          click_link '詳細'
          expect(first('#title')).to have_content '架空案件１−１'

@@ -1,0 +1,47 @@
+<h1><%= t "users.#{action_name}.title" %></h1>
+<div class="profile_container">
+  <p>
+    <strong><%= User.human_attribute_name :name %>:</strong>
+    <span id="name"><%= @user.name %></span>
+  </p>
+
+  <p>
+    <strong><%= User.human_attribute_name :email %>:</strong>
+    <span id="email"><%= @user.email %></span>
+  </p>
+
+  <div class="task_table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= Task.human_attribute_name('title') %></th>
+          <th><%= Task.human_attribute_name('detail') %></th>
+          <th><%= Task.human_attribute_name('deadline') %></th>
+          <th><%= Task.human_attribute_name('status') %></th>
+          <th><%= Task.human_attribute_name('priority') %></th>
+        </tr>
+      </thead>
+      <tbody class="row">
+        <% @tasks.each do |task| %>
+          <tr>
+            <td class="col-md-2 title" ><%= task.title %></td>
+            <td class="col-md-6 detail" ><%= task.detail %></td>
+            <td class="col-md-1 deadline" ><%= task.deadline %></td>
+            <td class="col-md-1 status" ><%= task.status %></td>
+            <td class="col-md-1 priority" ><%= task.priority %></td>
+            <div>
+              <td><%= link_to '詳細', task %></td>
+              <td><%= link_to '編集', edit_task_path(task) %></td>
+              <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </div>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <%= link_to 'ユーザー情報を編集', edit_user_path(@user.id), class: "btn btn-info" %> |
+    <%= link_to 'ユーザー情報を削除する', @user, method: :delete, data: { confirm: '本当に削除しますか？' } %>
+  </p>
+</div>

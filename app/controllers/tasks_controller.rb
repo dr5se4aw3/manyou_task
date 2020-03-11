@@ -1,29 +1,30 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :check_login
   # GET /tasks
   # GET /tasks.json
   def index
     #@tasks = Task.all.order('created_at desc')
     #@tasks = Task.page.(params[:page]).per(PER)
-    @tasks = Task.order('created_at desc').page(params[:page]).per(5)
+    @tasks = current_user.tasks.order('created_at desc').page(params[:page]).per(5)
     #終了期限による降順ソート
     if params[:sort_expired]
-      @tasks = Task.all.order('deadline desc').page(params[:page]).per(5)
+      @tasks = current_user.tasks.order('deadline desc').page(params[:page]).per(5)
     end
     #優先順位による降順ソート
     if params[:sort_priority]
-      @tasks = Task.all.order('priority desc').page(params[:page]).per(5)
+      @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5)
     end
     #タイトルおよび状態による絞り込み
     if params[:search]
       if params[:title].present? && params[:status].present?
-        @tasks = Task.search_with_title_status(params[:title], params[:status]).page(params[:page]).per(5)
+        @tasks = current_user.tasks.search_with_title_status(params[:title], params[:status]).page(params[:page]).per(5)
       elsif params[:title].present?
-        @tasks = Task.search_with_title(params[:title]).page(params[:page]).per(5)
+        @tasks = current_user.tasks.search_with_title(params[:title]).page(params[:page]).per(5)
       elsif params[:status].present?
-        @tasks = Task.search_with_status(params[:status]).page(params[:page]).per(5)
+        @tasks = current_user.tasks.search_with_status(params[:status]).page(params[:page]).per(5)
       else
-        @tasks = Task.all.order('created_at desc').page(params[:page]).per(5)
+        @tasks = current_user.tasks.page(params[:page]).per(5)
       end
     end
   end
@@ -40,13 +41,15 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    if @task.user_id != current_user.id
+      redirect_to tasks_path, notice: '他ユーザーのタスクは編集できません。'
+    end
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
-
+    @task = current_user.tasks.build(task_params)
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -75,6 +78,9 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
+    if @task.user_id != current_user.id
+      redirect_to tasks_path, notice: '他ユーザーのタスクは削除できません。'
+    end
     @task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
@@ -91,5 +97,13 @@ class TasksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:title, :detail, :deadline, :status, :priority)
+    end
+
+    def check_login
+      if logged_in?
+      else
+        flash[:notice] = "ログインしてください"
+        redirect_to new_session_path
+      end
     end
 end

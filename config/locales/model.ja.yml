@@ -12,6 +12,7 @@ ja:
         current_password: 現在のパスワード
         password: パスワード
         password_confirmation: 確認用パスワード
+        admin: 権限
         remember_me: ログインを記憶
         image: イメージ
       task:
@@ -20,3 +21,6 @@ ja:
         deadline: 終了期限
         status: 状態
         priority: 優先順位
+      session:
+        email: メールアドレス
+        password: パスワード

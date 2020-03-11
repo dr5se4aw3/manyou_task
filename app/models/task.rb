@@ -11,7 +11,9 @@ class StatusValidator < ActiveModel::Validator
 end
 
 class Task < ApplicationRecord
+  belongs_to :user
   enum priority:{ 低: 0, 中: 1, 高: 2}
+
   validates :title, presence: true, length: { maximum: 30 }
   validates :detail, presence: true, length: { maximum: 255 }
   validates :deadline, presence: true
@@ -20,6 +22,7 @@ class Task < ApplicationRecord
   validates :priority,presence: true
 
 
+#  scope :search_with_user_id, -> (cuurent_user_id){where(user_id: current_user.id)}
   scope :search_with_title_status, -> (title, status){where("title LIKE ?", "%#{title}%").where(status: status)}
   scope :search_with_title, -> (title){where("title LIKE ?", "%#{title}%")}
   scope :search_with_status, -> (status){where(status: status)}
