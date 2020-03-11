@@ -55,17 +55,17 @@ RSpec.describe Task, type: :model do
       @taskB2 = FactoryBot.create(:task, title:'BBBB', status: '着手中', user: @user)
     end
     it "titleとstatusによる絞り込み検索が通る" do
-      task = Task.search_with_title_status('aaaa', '未着手', @taskA1.user_id)
+      task = @user.tasks.search_with_title_status('aaaa', '未着手')
       #task = Task.search_with_title('aaaa').search_with_status('未着手')
       expect(task).to include(@taskA1)
     end
     it "titleによる絞り込み検索が通る" do
-      task = Task.search_with_title("BBBB", @taskB1.user_id)
+      task = @user.tasks.search_with_title("BBBB")
       expect(task).to include(@taskB1)
       expect(task).to include(@taskB2)
     end
     it "titleとstatusによる絞り込み検索が通る" do
-      task = Task.search_with_status("着手中", @taskB2.user_id)
+      task = @user.tasks.search_with_status("着手中")
       expect(task).to include(@taskA2)
       expect(task).to include(@taskB2)
     end
