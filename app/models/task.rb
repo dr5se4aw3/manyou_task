@@ -12,6 +12,8 @@ end
 
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :label_on_tasks, dependent: :destroy
+  has_many :related_labels, through: :label_on_tasks, source: :label
   enum priority:{ 低: 0, 中: 1, 高: 2}
 
   validates :title, presence: true, length: { maximum: 30 }
