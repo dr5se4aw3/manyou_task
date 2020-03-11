@@ -37,7 +37,7 @@ RSpec.describe 'ユーザー・ログイン管理機能', type: :system do
       it "タスク管理機能にアクセスできないこと" do
         visit tasks_path
         expect(first('#notice')).to have_content 'ログインしてください'
-        expect(first('h1')).to have_content 'ログインフォーム'
+        expect(first('h1')).to have_content 'ログイン'
       end
     end
     context '既にログインをしている場合' do
@@ -69,7 +69,7 @@ RSpec.describe 'ユーザー・ログイン管理機能', type: :system do
       it "ログアウトが可能なこと" do
         click_on 'ログアウト'
         expect(first('#notice')).to have_content 'ろぐあうとしました'
-        expect(first('h1')).to have_content 'ログインフォーム'
+        expect(first('h1')).to have_content 'ログイン'
       end
     end
   end
@@ -163,12 +163,16 @@ RSpec.describe 'ユーザー・ログイン管理機能', type: :system do
         visit admin_users_path
       end
       it "一般ユーザーを削除できること" do
-        find("#destroy_#{@user2.name}").click
+        within "#destroy_#{@user2.name}" do
+          click_on 'Destroy'
+        end
         page.accept_confirm "Are you sure?"
         expect(page).to have_content 'ユーザーの削除が完了しました'
       end
       it "管理者を削除できること" do
-        find("#destroy_#{@admin2.name}").click
+        within "#destroy_#{@admin2.name}" do
+          click_on 'Destroy'
+        end
         page.accept_confirm "Are you sure?"
         expect(page).to have_content 'ユーザーの削除が完了しました'
       end
