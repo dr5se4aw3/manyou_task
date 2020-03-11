@@ -9,13 +9,18 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
-  after_destroy :last_admin!
-  after_update :last_admin!
+  before_destroy :last_admin!
+  before_update :last_admin!
 
   private
+
   def last_admin!
-    if User.where(admin: true).count < 1
-      raise ActiveRecord::Rollback
+    target = User.find_by(id: self.id)
+
+    if User.where(admin: true).count <= 1
+      if self.admin || (target.admin && !self.admin)
+        raise ActiveRecord::Rollback
+      end
     end
   end
 end

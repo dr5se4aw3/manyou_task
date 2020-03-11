@@ -3,7 +3,7 @@ end
 
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_admin
+#  before_action :check_admin
   # GET /users
   # GET /users.json
   def index

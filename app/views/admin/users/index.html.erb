@@ -15,7 +15,7 @@
       <% @users.each do |user| %>
         <tr>
           <td id="<%= user.name %>"><%= user.id %></td>
-          <td id="<%= user.name %>"><%= user.admin %></td>
+          <td id="<%= user.name %>"><%= user.admin ? :管理者 : :一般%></td>
           <td id="<%= user.name %>"><%= user.name %></td>
           <td id="<%= user.name %>"><%= user.email %></td>
           <td id="<%= user.name %>"><%= user.tasks.count %></td>
