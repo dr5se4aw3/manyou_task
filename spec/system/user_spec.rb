@@ -103,7 +103,7 @@ RSpec.describe 'ユーザー・ログイン管理機能', type: :system do
         sleep 0.3
         properties = all('#sample02')
         expect(properties[3]).to have_content 'sample_mail02@sample.com'
-        expect(properties[1]).to have_content 'false'
+        expect(properties[1]).to have_content '一般'
       end
       it "管理者ユーザーが、管理者ユーザーを作成できること" do
         fill_in User.human_attribute_name(:name), with: 'admin02'
@@ -115,7 +115,7 @@ RSpec.describe 'ユーザー・ログイン管理機能', type: :system do
         sleep 0.3
         properties = all('#admin02')
         expect(properties[3]).to have_content 'admin_mail02@sample.com'
-        expect(properties[1]).to have_content 'true'
+        expect(properties[1]).to have_content '管理者'
       end
     end
     context 'ユーザー一覧画面' do
