@@ -12,8 +12,8 @@ end
 
 class Task < ApplicationRecord
   belongs_to :user
-
   enum priority:{ 低: 0, 中: 1, 高: 2}
+
   validates :title, presence: true, length: { maximum: 30 }
   validates :detail, presence: true, length: { maximum: 255 }
   validates :deadline, presence: true
