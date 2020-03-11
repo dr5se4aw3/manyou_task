@@ -6,25 +6,25 @@ class TasksController < ApplicationController
   def index
     #@tasks = Task.all.order('created_at desc')
     #@tasks = Task.page.(params[:page]).per(PER)
-    @tasks = Task.search_with_user_id(current_user.id).order('created_at desc').page(params[:page]).per(5)
+    @tasks = current_user.tasks.order('created_at desc').page(params[:page]).per(5)
     #終了期限による降順ソート
     if params[:sort_expired]
-      @tasks = Task.search_with_user_id(current_user.id).order('deadline desc').page(params[:page]).per(5)
+      @tasks = current_user.tasks.order('deadline desc').page(params[:page]).per(5)
     end
     #優先順位による降順ソート
     if params[:sort_priority]
-      @tasks = Task.search_with_user_id(current_user.id).order('priority desc').page(params[:page]).per(5)
+      @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5)
     end
     #タイトルおよび状態による絞り込み
     if params[:search]
       if params[:title].present? && params[:status].present?
-        @tasks = Task.search_with_title_status(params[:title], params[:status], current_user.id).page(params[:page]).per(5)
+        @tasks = current_user.tasks.search_with_title_status(params[:title], params[:status]).page(params[:page]).per(5)
       elsif params[:title].present?
-        @tasks = Task.search_with_title(params[:title], current_user.id).page(params[:page]).per(5)
+        @tasks = current_user.tasks.search_with_title(params[:title]).page(params[:page]).per(5)
       elsif params[:status].present?
-        @tasks = Task.search_with_status(params[:status], current_user.id).page(params[:page]).per(5)
+        @tasks = current_user.tasks.search_with_status(params[:status]).page(params[:page]).per(5)
       else
-        @tasks = Task.search_with_user_id(current_user.id).page(params[:page]).per(5)
+        @tasks = current_user.tasks.page(params[:page]).per(5)
       end
     end
   end
