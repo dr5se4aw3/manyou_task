@@ -112,7 +112,6 @@ RSpec.describe 'ラベル管理機能', type: :system do
         fill_in :title, with: 'ラベルテスト壱'
         select '未着手', from: :status
         click_button '絞り込み検索'
-        byebug
         expect(page).to have_content '検索テスト３'
         expect(page).not_to have_content '検索テスト２'
         expect(page).not_to have_content '検索テスト１'
