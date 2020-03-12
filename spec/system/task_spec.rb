@@ -39,7 +39,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         sleep 0.1
         click_link '終了期限(降順)でソートする'
         sleep 0.1
-        byebug
         task_list = all('.deadline')
         expect(task_list[0]).to have_content '2020-05-01'
         expect(task_list[3]).to have_content '2020-01-01'
@@ -54,7 +53,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         sleep 0.1
         click_link '優先順位でソートする'
         sleep 0.1
-        byebug
         task_list = all('.priority')
         expect(task_list[0]).to have_content '高'
         expect(task_list[2]).to have_content '低'
@@ -130,7 +128,6 @@ RSpec.describe 'タスク管理機能', type: :system do
          task = FactoryBot.create(:task, user: @user1)
          visit tasks_path
          click_link '詳細'
-         byebug
          expect(first('#title')).to have_content '架空案件１−１'
          expect(first('#detail')).to have_content '要件定義終えること'
          expect(first('#deadline')).to have_content "2020-06-01"

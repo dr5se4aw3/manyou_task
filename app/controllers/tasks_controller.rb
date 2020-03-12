@@ -9,10 +9,21 @@ class TasksController < ApplicationController
 
     #ソート
     #終了期限による降順ソート
-    @tasks = @tasks.order('deadline desc') if params[:sort_expired].present?
+    @tasks = current_user.tasks.order('deadline desc').page(params[:page]).per(5) if params[:sort_expired].present?
     #優先順位による降順ソート
-    @tasks = @tasks.order('priority desc') if params[:sort_priority].present?
+    @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5) if params[:sort_priority].present?
 
+=begin
+    @tasks = current_user.tasks.order('created_at desc').page(params[:page]).per(5)
+    #終了期限による降順ソート
+    if params[:sort_expired]
+      @tasks = current_user.tasks.order('deadline desc').page(params[:page]).per(5)
+    end
+    #優先順位による降順ソート
+    if params[:sort_priority]
+      @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5)
+    end
+=end
     #絞り込み検索
     if params[:search]
       #タイトルによる絞り込み
