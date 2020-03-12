@@ -1,6 +1,6 @@
 <div class="main_container">
   <h1><%= t "tasks.#{action_name}.title" %></h1>
-  <%= form_with(model: task, local: true) do |form| %>
+  <%= form_for task do |form| %>
     <% if task.errors.any? %>
       <div id="error_explanation">
         <h2><%= task.errors.count %> 件のエラーがあります。</h2>
@@ -35,10 +35,12 @@
             <td class="col-md-2"><%= form.label :priority %></td>
             <td class="col-md-7"><%= form.select :priority, Task.priorities.keys.to_a %></td>
           </tr>
-          <% form.fields_for :label_on_tasks do |lt| %>
+          <% labels.each do |label| %>
             <tr class="row">
-              <td class="col-md-2"><%= lt.label :user_id %></td>
-              <td class="col-md-7"><%= lt.select :user_id, @labels.to_a %></td>
+              <td>
+                <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+                <%= form.label :label_ids, label.title %>
+              </td>
             </tr>
           <% end %>
           <tr class="row">

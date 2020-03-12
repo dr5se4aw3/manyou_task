@@ -32,7 +32,7 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
-    @labels_on_task = @task.related_labels
+    @labels = @task.labels
   end
 
   # GET /tasks/new
@@ -99,7 +99,7 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :detail, :deadline, :status, :priority)
+      params.require(:task).permit(:title, :detail, :deadline, :status, :priority, label_ids: [])
     end
 
     def check_login
