@@ -32,6 +32,7 @@
                     <td><%= label.title %></td>
                   </tr>
                 <% end %>
+                <%= "※ラベルは設定されていません※" if @labels.empty? %>
               </table>
             </td>
         </tr>

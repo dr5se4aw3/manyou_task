@@ -1,8 +1,8 @@
 1. labelテーブル作成
 2. label_on_taskテーブル作成
 3. task,label,label_on_taskそれぞれのアソシエーションを設定(taskとlabelの多対多)
-
 4. labelの作成・削除機能を実装
 5. taskにlabelを貼り付ける（taskの作成・編集画面からラベルをできるようにする）
 6. taskの詳細画面で紐づけられたlabelを一覧で表示する
+
 7. taskの一覧画面でlabelによる検索をできるようにする
