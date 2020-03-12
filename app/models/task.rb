@@ -1,11 +1,7 @@
 class StatusValidator < ActiveModel::Validator
   def validate(record)
-    if record.status.empty?
-      record.errors[:status] << 'を入力してください。'
-    else
-      unless ["未着手","着手中","完了"].include?(record.status)
-        record.errors[:status] << 'が不正です。'
-      end
+    unless ["未着手","着手中","完了"].include?(record.status)
+      record.errors[:status] << 'が不正です。'
     end
   end
 end
@@ -21,6 +17,7 @@ class Task < ApplicationRecord
   validates :detail, presence: true, length: { maximum: 255 }
   validates :deadline, presence: true
   include ActiveModel::Validations
+  validates :status, presence: true
   validates_with StatusValidator
   validates :priority,presence: true
 
