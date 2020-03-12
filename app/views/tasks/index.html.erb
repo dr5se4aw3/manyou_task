@@ -12,7 +12,7 @@
           <td><%= form.select :status, ['','未着手', '着手中', '完了'] %></td>
         </tr>
         <tr>
-          <td><strong>ラベル検索</strong></td>
+          <td><%= form.label :label_id, "ラベル検索" %></td>
           <td>
             <%= form.select :label_id, ['',*@labels.to_a] %>
           </td>

@@ -1,6 +1,6 @@
 class Admin::LabelsController < ApplicationController
   before_action :set_label, only: [:destroy]
-  #before_action :check_admin
+  before_action :check_admin
   # GET /labels
   # GET /labels.json
   def index
@@ -60,13 +60,13 @@ class Admin::LabelsController < ApplicationController
 
   def check_admin
     if logged_in?
-      if admin_label?
+      if admin_user?
       else
         begin
           raise AuthorityError
         rescue => e
-          flash[:notice] = "#{e}：管理者権限がありません"
-          redirect_to label_path(current_label.id)
+          flash[:notice] = "#{e}：管理者権限が無いためアクセスできません。"
+          redirect_to user_path(current_user.id)
         end
       end
     else

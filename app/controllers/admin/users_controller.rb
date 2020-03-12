@@ -1,6 +1,3 @@
-class AuthorityError < StandardError #例外クラスを継承
-end
-
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_admin
@@ -76,7 +73,7 @@ class Admin::UsersController < ApplicationController
           begin
             raise AuthorityError
           rescue => e
-            flash[:notice] = "#{e}：管理者権限がありません"
+            flash[:notice] = "#{e}：管理者権限が無いためアクセスできません。"
             redirect_to user_path(current_user.id)
           end
         end
