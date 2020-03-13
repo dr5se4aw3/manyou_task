@@ -39,12 +39,9 @@
             <td><strong>ラベル</strong></td>
             <td>
               <table>
-                <% labels.each do |label| %>
+                <%= form.collection_check_boxes(:label_ids, Label.all, :id, :title) do |l| %>
                   <tr>
-                    <td>
-                      <%= form.check_box :label_ids, { multiple: true, checked: @checked_labels.include?(label), disabled: label[:disabled], include_hidden: false }, label[:id]%>
-                      <%= form.label :label_ids, label.title %>
-                    </td>
+                    <td><%= l.label{l.check_box + " #{l.text}"} %></td>
                   </tr>
                 <% end %>
               </table>
