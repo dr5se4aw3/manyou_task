@@ -34,6 +34,7 @@ class TasksController < ApplicationController
     @task = Task.new
     @task.label_on_tasks.build
     @labels = Label.all
+    @checked_labels = @task.labels
   end
 
   # GET /tasks/1/edit

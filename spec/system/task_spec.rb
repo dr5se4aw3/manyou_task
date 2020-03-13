@@ -128,6 +128,7 @@ RSpec.describe 'タスク管理機能', type: :system do
          task = FactoryBot.create(:task, user: @user1)
          visit tasks_path
          click_link '詳細'
+         sleep 0.1
          expect(first('#title')).to have_content '架空案件１−１'
          expect(first('#detail')).to have_content '要件定義終えること'
          expect(first('#deadline')).to have_content "2020-06-01"
