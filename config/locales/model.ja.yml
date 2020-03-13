@@ -21,6 +21,8 @@ ja:
         deadline: 終了期限
         status: 状態
         priority: 優先順位
+      label:
+        title: ラベル名
       session:
         email: メールアドレス
         password: パスワード

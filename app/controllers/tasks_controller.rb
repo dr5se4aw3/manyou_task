@@ -13,17 +13,6 @@ class TasksController < ApplicationController
     #優先順位による降順ソート
     @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5) if params[:sort_priority].present?
 
-=begin
-    @tasks = current_user.tasks.order('created_at desc').page(params[:page]).per(5)
-    #終了期限による降順ソート
-    if params[:sort_expired]
-      @tasks = current_user.tasks.order('deadline desc').page(params[:page]).per(5)
-    end
-    #優先順位による降順ソート
-    if params[:sort_priority]
-      @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5)
-    end
-=end
     #絞り込み検索
     if params[:search]
       #タイトルによる絞り込み
@@ -45,10 +34,12 @@ class TasksController < ApplicationController
     @task = Task.new
     @task.label_on_tasks.build
     @labels = Label.all
+    @checked_labels = @task.labels
   end
 
   # GET /tasks/1/edit
   def edit
+    @labels = Label.all
     if @task.user_id != current_user.id
       redirect_to tasks_path, notice: '他ユーザーのタスクは編集できません。'
     end
@@ -72,6 +63,9 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+#    unless params[:task][:label_ids]
+#      @task.label_on_tasks.delete_all
+#    end
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
@@ -100,7 +94,7 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
-      @labels = @task.labels
+      @checked_labels = @task.labels
     end
 
     def set_label

@@ -22,8 +22,8 @@ class Task < ApplicationRecord
   validates :priority,presence: true
 
 
-#  scope :search_with_user_id, -> (cuurent_user_id){where(user_id: current_user.id)}
   scope :search_with_title, -> (title){where("title LIKE ?", "%#{title}%")}
   scope :search_with_status, -> (status){where(status: status)}
   scope :search_with_label, -> (label){where(id: LabelOnTask.where(label_id: label).pluck(:task_id))}
+
 end

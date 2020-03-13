@@ -25,7 +25,7 @@
           </tr>
           <tr class="row">
             <td class="col-md-2"><%= form.label :deadline %></td>
-            <td class="col-md-10"><%= form.date_field :deadline, value:"" %></td>
+            <td class="col-md-10"><%= form.date_field :deadline %></td>
           </tr>
           <tr class="row">
             <td class="col-md-2"><%= form.label :status %></td>
@@ -35,14 +35,18 @@
             <td class="col-md-2"><%= form.label :priority %></td>
             <td class="col-md-7"><%= form.select :priority, Task.priorities.keys.to_a %></td>
           </tr>
-          <% labels.each do |label| %>
-            <tr class="row">
-              <td>
-                <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
-                <%= form.label :label_ids, label.title %>
-              </td>
-            </tr>
-          <% end %>
+          <tr class="row">
+            <td><strong>ラベル</strong></td>
+            <td>
+              <table>
+                <%= form.collection_check_boxes(:label_ids, Label.all, :id, :title) do |l| %>
+                  <tr>
+                    <td><%= l.label{l.check_box + " #{l.text}"} %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </td>
+          </tr>
           <tr class="row">
             <td><%= form.submit %></td>
             <td></td>
