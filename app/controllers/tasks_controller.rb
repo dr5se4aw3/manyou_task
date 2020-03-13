@@ -38,6 +38,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @labels = Label.all
     if @task.user_id != current_user.id
       redirect_to tasks_path, notice: '他ユーザーのタスクは編集できません。'
     end
@@ -89,7 +90,7 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
-      @labels = @task.labels
+      @checked_labels = @task.labels
     end
 
     def set_label

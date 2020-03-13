@@ -27,12 +27,12 @@
           <td>ラベル</td>
           <td class="col-md-2">
             <table>
-              <% @labels.each do |label| %>
+              <% @checked_labels.each do |label| %>
                 <tr>
                   <td><%= label.title %></td>
                 </tr>
               <% end %>
-              <%= "※ラベルは設定されていません※" if @labels.empty? %>
+              <%= "※ラベルは設定されていません※" if @checked_labels.empty? %>
             </table>
           </td>
         </tr>
