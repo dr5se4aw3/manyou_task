@@ -4,8 +4,16 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    #@tasks = Task.all.order('created_at desc')
-    #@tasks = Task.page.(params[:page]).per(PER)
+    @labels = Hash[*Label.pluck(:title, :id).flatten]
+    @tasks = current_user.tasks.order('created_at desc').page(params[:page]).per(5)
+
+    #ソート
+    #終了期限による降順ソート
+    @tasks = current_user.tasks.order('deadline desc').page(params[:page]).per(5) if params[:sort_expired].present?
+    #優先順位による降順ソート
+    @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5) if params[:sort_priority].present?
+
+=begin
     @tasks = current_user.tasks.order('created_at desc').page(params[:page]).per(5)
     #終了期限による降順ソート
     if params[:sort_expired]
@@ -15,17 +23,15 @@ class TasksController < ApplicationController
     if params[:sort_priority]
       @tasks = current_user.tasks.order('priority desc').page(params[:page]).per(5)
     end
-    #タイトルおよび状態による絞り込み
+=end
+    #絞り込み検索
     if params[:search]
-      if params[:title].present? && params[:status].present?
-        @tasks = current_user.tasks.search_with_title_status(params[:title], params[:status]).page(params[:page]).per(5)
-      elsif params[:title].present?
-        @tasks = current_user.tasks.search_with_title(params[:title]).page(params[:page]).per(5)
-      elsif params[:status].present?
-        @tasks = current_user.tasks.search_with_status(params[:status]).page(params[:page]).per(5)
-      else
-        @tasks = current_user.tasks.page(params[:page]).per(5)
-      end
+      #タイトルによる絞り込み
+      @tasks = @tasks.search_with_title(params[:title]) if params[:title].present?
+      #ステータスによる絞り込み
+      @tasks = @tasks.search_with_status(params[:status]) if params[:status].present?
+      #ラベルによる絞り込み
+      @tasks = @tasks.search_with_label(params[:label_id]) if params[:label_id].present?
     end
   end
 
@@ -37,6 +43,8 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    @task.label_on_tasks.build
+    @labels = Label.all
   end
 
   # GET /tasks/1/edit
@@ -92,11 +100,15 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
+      @labels = @task.labels
     end
 
+    def set_label
+      @label = Label.where(params[:label_ids])
+    end
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :detail, :deadline, :status, :priority)
+      params.require(:task).permit(:title, :detail, :deadline, :status, :priority, label_ids: [])
     end
 
     def check_login

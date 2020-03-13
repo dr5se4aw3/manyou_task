@@ -2,14 +2,26 @@
 <div class="row search_title_status">
   <%= form_with(local: true, method: :get) do |form| %>
     <div class="col-md-5 form_task">
-      <%= form.label :title_search, "タイトル検索" %>
-      <%= form.text_field :title %>
-      <%= form.label :status_search, "ステータス検索" %>
-      <%= form.select :status, ['','未着手', '着手中', '完了'] %>
-
-      <%= form.hidden_field :search, value: "true"%>
-
-      <%= form.submit "絞り込み検索"%>
+      <table>
+        <tr>
+          <td><%= form.label :title_search, "タイトル検索" %></td>
+          <td><%= form.text_field :title %></td>
+        </tr>
+        <tr>
+          <td><%= form.label :status_search, "ステータス検索" %></td>
+          <td><%= form.select :status, ['','未着手', '着手中', '完了'] %></td>
+        </tr>
+        <tr>
+          <td><%= form.label :label_id, "ラベル検索" %></td>
+          <td>
+            <%= form.select :label_id, ['',*@labels.to_a] %>
+          </td>
+        </tr>
+        <%= form.hidden_field :search, value: "true"%>
+        <tr>
+          <td><%= form.submit "絞り込み検索"%></td>
+        </tr>
+      </table>
     </div>
   <% end %>
   <div class="col-md-2 sort_deadline">
@@ -25,11 +37,11 @@
   <table class="table">
     <thead>
       <tr>
-        <th><%= Task.human_attribute_name('title') %></th>
-        <th><%= Task.human_attribute_name('detail') %></th>
-        <th><%= Task.human_attribute_name('deadline') %></th>
-        <th><%= Task.human_attribute_name('status') %></th>
-        <th><%= Task.human_attribute_name('priority') %></th>
+        <th class="col-md-2"><%= Task.human_attribute_name('title') %></th>
+        <th class="col-md-6"><%= Task.human_attribute_name('detail') %></th>
+        <th class="col-md-1"><%= Task.human_attribute_name('deadline') %></th>
+        <th class="col-md-1"><%= Task.human_attribute_name('status') %></th>
+        <th class="col-md-1"><%= Task.human_attribute_name('priority') %></th>
       </tr>
     </thead>
 

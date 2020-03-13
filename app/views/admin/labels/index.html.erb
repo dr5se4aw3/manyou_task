@@ -1,0 +1,22 @@
+<h1><%= t "labels.#{action_name}.title" %></h1>
+
+<div class="task_table">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= Label.human_attribute_name('id') %></th>
+        <th><%= Label.human_attribute_name('title') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @labels.each do |label| %>
+        <tr>
+          <td id="<%= label.title %>"><%= label.id %></td>
+          <td id="<%= label.title %>"><%= label.title %></td>
+          <td id="destroy_<%= label.title %>"><%= link_to 'Destroy', admin_label_path(label.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
